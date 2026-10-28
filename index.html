@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mati God | Portafolio</title>
+
+  <meta name="description" content="Portafolio oficial de Mati God. Diseño, configuración y administración de servidores de Discord.">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --orange: #ff8a3d;
+      --orange2: #ffb15c;
+      --pink: #ff4fa3;
+      --pink2: #ff7bc0;
+
+      --bg: #09090d;
+      --bg2: #111118;
+
+      --glass: rgba(24, 24, 33, 0.62);
+      --glass2: rgba(255, 255, 255, 0.06);
+      --border: rgba(255, 255, 255, 0.12);
+
+      --text: #ffffff;
+      --muted: #b7b7c3;
+
+      --shadow:
+        0 20px 60px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255, 128, 55, 0.13), transparent 30%),
+        radial-gradient(circle at 85% 70%, rgba(255, 61, 161, 0.13), transparent 32%),
+        #09090d;
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    button,
+    a {
+      font-family: inherit;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    /* =========================
+       FONDO ANIMADO
+    ========================= */
+
+    .background {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      z-index: -10;
+      pointer-events: none;
+    }
+
+    .grid {
+      position: absolute;
+      inset: 0;
+
+      background-image:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+
+      background-size: 55px 55px;
+
+      mask-image:
+        linear-gradient(to bottom, black, transparent 90%);
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: .34;
+      animation: blobMove 15s ease-in-out infinite alternate;
+    }
+
+    .blob.one {
+      width: 420px;
+      height: 420px;
+      background: var(--orange);
+      top: -160px;
+      left: -120px;
+    }
+
+    .blob.two {
+      width: 480px;
+      height: 480px;
+      background: var(--pink);
+      bottom: -220px;
+      right: -180px;
+      animation-delay: -5s;
+    }
+
+    .blob.three {
+      width: 280px;
+      height: 280px;
+      background: #9b4dff;
+      left: 55%;
+      top: 40%;
+      opacity: .12;
+      animation-delay: -8s;
+    }
+
+    @keyframes blobMove {
+      from {
+        transform: translate(0, 0) scale(1);
+      }
+
+      to {
+        transform: translate(70px, 45px) scale(1.12);
+      }
+    }
+
+    /* =========================
+       NAVEGACIÓN
+    ========================= */
+
+    .nav-wrap {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1100px, calc(100% - 28px));
+      z-index: 1000;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+
+      padding: 12px 15px 12px 20px;
+
+      background: rgba(18, 18, 26, 0.72);
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 22px;
+
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+
+      box-shadow:
+        0 15px 50px rgba(0,0,0,.35),
+        inset 0 1px rgba(255,255,255,.06);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+
+      background:
+        linear-gradient(135deg,
+        rgba(255,138,61,.25),
+        rgba(255,79,163,.25));
+
+      border: 1px solid rgba(255,255,255,.1);
+
+      box-shadow:
+        inset 0 1px rgba(255,255,255,.12),
+        0 8px 25px rgba(255,80,160,.12);
+    }
+
+    .brand-name {
+      background:
+        linear-gradient(90deg,
+        var(--orange2),
+        var(--pink2));
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-btn {
+      border: 0;
+      background: transparent;
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      color: #bdbdc7;
+      transition: .25s;
+      font-size: 14px;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255,255,255,.06);
+      color: white;
+    }
+
+    .nav-btn.active {
+      color: white;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,138,61,.20),
+          rgba(255,79,163,.20)
+        );
+
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.08);
+    }
+
+    /* =========================
+       CONTENIDO
+    ========================= */
+
+    main {
+      width: min(1100px, calc(100% - 28px));
+      margin: auto;
+      padding-top: 115px;
+      padding-bottom: 60px;
+    }
+
+    .page {
+      display: none;
+      min-height: calc(100vh - 175px);
+    }
+
+    .page.active {
+      display: block;
+      animation: pageIn .55s cubic-bezier(.2,.8,.2,1);
+    }
+
+    @keyframes pageIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(.985);
+        filter: blur(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    /* =========================
+       INICIO
+    ========================= */
+
+    .hero {
+      min-height: calc(100vh - 175px);
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      text-align: center;
+      position: relative;
+    }
+
+    .hello-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      padding: 9px 15px;
+      border-radius: 999px;
+
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+
+      backdrop-filter: blur(20px);
+
+      color: #d8d8df;
+      font-size: 13px;
+
+      margin-bottom: 24px;
+
+      animation: floatBadge 4s ease-in-out infinite;
+    }
+
+    @keyframes floatBadge {
+      0%,100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 9vw, 88px);
+      line-height: .95;
+      letter-spacing: -5px;
+      margin-bottom: 22px;
+    }
+
+    .gradient-text {
+      background:
+        linear-gradient(
+          90deg,
+          #fff 5%,
+          var(--orange2) 45%,
+          var(--pink) 90%
+        );
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      max-width: 650px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .hero-buttons {
+      margin-top: 32px;
+
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .main-button {
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 15px;
+
+      padding: 13px 20px;
+
+      background: rgba(255,255,255,.055);
+
+      color: white;
+      text-decoration: none;
+
+      cursor: pointer;
+
+      backdrop-filter: blur(20px);
+
+      transition:
+        transform .25s,
+        background .25s,
+        border-color .25s,
+        box-shadow .25s;
+    }
+
+    .main-button:hover {
+      transform: translateY(-4px);
+
+      border-color: rgba(255,255,255,.22);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,138,61,.18),
+          rgba(255,79,163,.18)
+        );
+
+      box-shadow:
+        0 15px 40px rgba(255,79,163,.12);
+    }
+
+    .main-button.primary {
+      background:
+        linear-gradient(
+          135deg,
+          var(--orange),
+          var(--pink)
+        );
+
+      border: none;
+
+      box-shadow:
+        0 12px 35px rgba(255,80,150,.20);
+    }
+
+    .main-button.primary:hover {
+      box-shadow:
+        0 15px 45px rgba(255,80,150,.32);
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 15px;
+
+      font-size: 12px;
+      color: #777783;
+
+      animation: scrollFloat 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollFloat {
+      50% {
+        transform: translateY(7px);
+      }
+    }
+
+    /* =========================
+       TITULOS
+    ========================= */
+
+    .section-heading {
+      margin-bottom: 30px;
+    }
+
+    .section-heading span {
+      color: var(--pink2);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(35px, 6vw, 55px);
+      letter-spacing: -2px;
+      margin-top: 7px;
+    }
+
+    .section-heading p {
+      margin-top: 10px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 650px;
+    }
+
+    /* =========================
+       TARJETAS
+    ========================= */
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+
+      min-height: 210px;
+      padding: 23px;
+
+      border-radius: 22px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.075),
+          rgba(255,255,255,.025)
+        );
+
+      border: 1px solid rgba(255,255,255,.10);
+
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+
+      box-shadow: var(--shadow);
+
+      transition:
+        transform .35s cubic-bezier(.2,.8,.2,1),
+        border-color .35s,
+        background .35s,
+        box-shadow .35s;
+
+      animation: cardEnter .6s both;
+    }
+
+    .card:nth-child(2) {
+      animation-delay: .07s;
+    }
+
+    .card:nth-child(3) {
+      animation-delay: .14s;
+    }
+
+    .card:nth-child(4) {
+      animation-delay: .21s;
+    }
+
+    .card:nth-child(5) {
+      animation-delay: .28s;
+    }
+
+    .card:nth-child(6) {
+      animation-delay: .35s;
+    }
+
+    .card:nth-child(7) {
+      animation-delay: .42s;
+    }
+
+    @keyframes cardEnter {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(.96);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+
+      width: 150px;
+      height: 150px;
+
+      right: -80px;
+      top: -80px;
+
+      border-radius: 50%;
+
+      background: var(--cardGlow, var(--pink));
+
+      filter: blur(65px);
+      opacity: .18;
+
+      transition: .4s;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          120deg,
+          transparent 20%,
+          rgba(255,255,255,.08),
+          transparent 65%
+        );
+
+      transform: translateX(-120%);
+      transition: transform .7s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.015);
+
+      border-color: rgba(255,130,190,.28);
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.10),
+          rgba(255,255,255,.035)
+        );
+
+      box-shadow:
+        0 25px 70px rgba(0,0,0,.48),
+        0 0 35px rgba(255,79,163,.07);
+    }
+
+    .card:hover::before {
+      opacity: .3;
+      transform: scale(1.25);
+    }
+
+    .card:hover::after {
+      transform: translateX(120%);
+    }
+
+    .card-icon {
+      width: 55px;
+      height: 55px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 17px;
+
+      font-size: 27px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,138,61,.16),
+          rgba(255,79,163,.16)
+        );
+
+      border: 1px solid rgba(255,255,255,.08);
+
+      margin-bottom: 18px;
+
+      transition: .35s;
+    }
+
+    .card:hover .card-icon {
+      transform: rotate(-5deg) scale(1.1);
+    }
+
+    .card h3 {
+      font-size: 17px;
+      margin-bottom: 9px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .payment-card {
+      grid-column: 1 / -1;
+      min-height: auto;
+
+      display: flex;
+      align-items: center;
+      gap: 18px;
+
+      --cardGlow: var(--orange);
+    }
+
+    .payment-card .card-icon {
+      margin: 0;
+      flex-shrink: 0;
+    }
+
+    /* =========================
+       SOBRE MI
+    ========================= */
+
+    .about-box {
+      padding: 35px;
+
+      border-radius: 28px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.07),
+          rgba(255,255,255,.025)
+        );
+
+      border: 1px solid rgba(255,255,255,.10);
+
+      backdrop-filter: blur(25px);
+
+      box-shadow: var(--shadow);
+    }
+
+    .about-top {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+
+    .avatar-placeholder {
+      width: 75px;
+      height: 75px;
+      border-radius: 22px;
+
+      display: grid;
+      place-items: center;
+
+      font-size: 32px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,138,61,.30),
+          rgba(255,79,163,.30)
+        );
+
+      border: 1px solid rgba(255,255,255,.12);
+
+      box-shadow:
+        0 10px 35px rgba(255,80,150,.15);
+    }
+
+    .about-name h3 {
+      font-size: 24px;
+    }
+
+    .about-name p {
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 13px;
+    }
+
+    .about-item {
+      padding: 18px;
+
+      border-radius: 17px;
+
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.075);
+
+      color: #d8d8df;
+
+      transition: .25s;
+    }
+
+    .about-item:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,.065);
+    }
+
+    .about-description {
+      margin-top: 22px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* =========================
+       SERVIDOR
+    ========================= */
+
+    .server-hero {
+      position: relative;
+      overflow: hidden;
+
+      padding: 38px;
+
+      border-radius: 30px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,138,61,.11),
+          rgba(255,79,163,.10),
+          rgba(255,255,255,.035)
+        );
+
+      border: 1px solid rgba(255,255,255,.11);
+
+      backdrop-filter: blur(25px);
+
+      box-shadow: var(--shadow);
+
+      margin-bottom: 18px;
+    }
+
+    .server-hero::before {
+      content: "";
+      position: absolute;
+
+      width: 280px;
+      height: 280px;
+
+      background: var(--pink);
+
+      filter: blur(100px);
+
+      opacity: .12;
+
+      right: -80px;
+      top: -100px;
+    }
+
+    .server-logo {
+      width: 70px;
+      height: 70px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 20px;
+
+      font-size: 34px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,138,61,.30),
+          rgba(255,79,163,.30)
+        );
+
+      border: 1px solid rgba(255,255,255,.12);
+
+      margin-bottom: 20px;
+    }
+
+    .server-hero h2 {
+      font-size: clamp(30px, 5vw, 48px);
+      letter-spacing: -2px;
+    }
+
+    .server-subtitle {
+      margin-top: 8px;
+
+      color: var(--orange2);
+      font-weight: 600;
+    }
+
+    .server-description {
+      max-width: 760px;
+      margin-top: 18px;
+
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .server-features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 13px;
+
+      margin-top: 24px;
+    }
+
+    .server-feature {
+      padding: 17px 18px;
+
+      border-radius: 16px;
+
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.075);
+
+      color: #dedee5;
+
+      transition: .25s;
+    }
+
+    .server-feature:hover {
+      transform: translateX(4px);
+      background: rgba(255,255,255,.065);
+    }
+
+    .server-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 11px;
+      margin-top: 26px;
+    }
+
+    /* =========================
+       EQUIPO
+    ========================= */
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 17px;
+    }
+
+    .team-card {
+      padding: 27px;
+
+      border-radius: 24px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.07),
+          rgba(255,255,255,.025)
+        );
+
+      border: 1px solid rgba(255,255,255,.10);
+
+      backdrop-filter: blur(25px);
+
+      box-shadow: var(--shadow);
+
+      transition: .3s;
+    }
+
+    .team-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255,110,180,.25);
+    }
+
+    .team-avatar {
+      width: 65px;
+      height: 65px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 20px;
+
+      font-size: 27px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,138,61,.22),
+          rgba(255,79,163,.22)
+        );
+
+      border: 1px solid rgba(255,255,255,.10);
+
+      margin-bottom: 18px;
+    }
+
+    .team-card h3 {
+      font-size: 20px;
+    }
+
+    .team-card p {
+      color: var(--muted);
+      margin-top: 7px;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      width: min(1100px, calc(100% - 28px));
+      margin: 0 auto 25px;
+
+      text-align: center;
+
+      color: #74747e;
+      font-size: 12px;
+    }
+
+    footer strong {
+      color: var(--pink2);
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 850px) {
+
+      .nav-wrap {
+        top: 10px;
+      }
+
+      nav {
+        padding: 10px;
+        border-radius: 18px;
+      }
+
+      .brand {
+        padding-left: 4px;
+      }
+
+      .brand-name {
+        display: none;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: flex-end;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .nav-links::-webkit-scrollbar {
+        display: none;
+      }
+
+      .nav-btn {
+        flex-shrink: 0;
+        padding: 9px 11px;
+        font-size: 12px;
+      }
+
+      main {
+        padding-top: 95px;
+      }
+
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .server-features {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      .nav-wrap {
+        width: calc(100% - 16px);
+      }
+
+      .brand-icon {
+        width: 34px;
+        height: 34px;
+      }
+
+      main {
+        width: calc(100% - 20px);
+      }
+
+      .hero {
+        min-height: calc(100vh - 125px);
+      }
+
+      .hero h1 {
+        letter-spacing: -3px;
+      }
+
+      .hero p {
+        font-size: 14px;
+      }
+
+      .hero-buttons {
+        width: 100%;
+      }
+
+      .main-button {
+        flex: 1;
+        min-width: 140px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .payment-card {
+        display: block;
+      }
+
+      .payment-card .card-icon {
+        margin-bottom: 18px;
+      }
+
+      .about-box,
+      .server-hero {
+        padding: 23px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-heading h2 {
+        letter-spacing: -1.5px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- FONDO -->
+
+  <div class="background">
+    <div class="grid"></div>
+    <div class="blob one"></div>
+    <div class="blob two"></div>
+    <div class="blob three"></div>
+  </div>
+
+
+  <!-- NAVEGACIÓN -->
+
+  <div class="nav-wrap">
+    <nav>
+
+      <div class="brand">
+        <div class="brand-icon">🧡</div>
+        <div class="brand-name">Mati God</div>
+      </div>
+
+      <div class="nav-links">
+
+        <button class="nav-btn active" data-page="inicio">
+          🏠 Inicio
+        </button>
+
+        <button class="nav-btn" data-page="que-hago">
+          🛠️ Qué hago
+        </button>
+
+        <button class="nav-btn" data-page="sobre-mi">
+          🧡 Sobre mí
+        </button>
+
+        <button class="nav-btn" data-page="servidor">
+          ✨ Mi servidor
+        </button>
+
+        <button class="nav-btn" data-page="equipo">
+          👥 Equipo
+        </button>
+
+      </div>
+
+    </nav>
+  </div>
+
+
+  <main>
+
+    <!-- ========================
+         INICIO
+    ========================= -->
+
+    <section id="inicio" class="page active">
+
+      <div class="hero">
+
+        <div class="hello-badge">
+          ✨ Bienvenido a mi portafolio
+        </div>
+
+        <h1>
+          Hola, soy
+          <span class="gradient-text">Mati God</span>
+        </h1>
+
+        <p>
+          Me dedico a crear, decorar y configurar servidores de Discord,
+          buscando que cada comunidad tenga su propio estilo, una buena
+          organización y una experiencia increíble.
+        </p>
+
+        <div class="hero-buttons">
+
+          <button
+            class="main-button primary go-page"
+            data-page="que-hago">
+            🛠️ Ver qué hago
+          </button>
+
+          <button
+            class="main-button go-page"
+            data-page="sobre-mi">
+            🧡 Sobre mí
+          </button>
+
+          <button
+            class="main-button go-page"
+            data-page="servidor">
+            ✨ Glow Studios
+          </button>
+
+          <button
+            class="main-button go-page"
+            data-page="equipo">
+            👥 Equipo
+          </button>
+
+        </div>
+
+        <div class="scroll-hint">
+          Diseñado con 🧡 + 🩷
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================
+         QUÉ HAGO
+    ========================= -->
+
+    <section id="que-hago" class="page">
+
+      <div class="section-heading">
+        <span>Mis servicios</span>
+
+        <h2>🛠️ Qué hago</h2>
+
+        <p>
+          Diseño, organización, configuración y administración
+          para darle vida a tu servidor.
+        </p>
+      </div>
+
+
+      <div class="cards">
+
+        <article class="card"
+          style="--cardGlow:#ff914d;">
+
+          <div class="card-icon">🎨</div>
+
+          <h3>Decoraciones</h3>
+
+          <p>
+            Decoraciones de todo tipo: categorías, canales,
+            roles y diseños personalizados para que tu servidor
+            tenga una identidad propia.
+          </p>
+
+        </article>
+
+
+        <article class="card"
+          style="--cardGlow:#ff5ca8;">
+
+          <div class="card-icon">📝</div>
+
+          <h3>Embeds y mensajes</h3>
+
+          <p>
+            Embeds y mensajes personalizados, organizados
+            y preparados con muchas funciones para mejorar
+            la presentación del servidor.
+          </p>
+
+        </article>
+
+
+        <article class="card"
+          style="--cardGlow:#a96cff;">
+
+          <div class="card-icon">🤖</div>
+
+          <h3>Configuración de bots</h3>
+
+          <p>
+            Configuro Luminous Nova, Carl-bot, Guild Manager,
+            Fibo, Honeypot y muchos otros bots para tu comunidad.
+          </p>
+
+        </article>
+
+
+        <article class="card"
+          style="--cardGlow:#ff864d;">
+
+          <div class="card-icon">🛠️</div>
+
+          <h3>Servers desde 0</h3>
+
+          <p>
+            Creo servidores desde cero con estructuras complejas,
+            canales organizados y permisos bien pulidos.
+          </p>
+
+        </article>
+
+
+        <article class="card"
+          style="--cardGlow:#ff4f80;">
+
+          <div class="card-icon">🛡️</div>
+
+          <h3>Moderación y seguridad</h3>
+
+          <p>
+            Sistemas de moderación, seguridad y administración
+            para tener un mayor control de tu comunidad.
+          </p>
+
+        </article>
+
+
+        <article class="card"
+          style="--cardGlow:#ffb14d;">
+
+          <div class="card-icon">📅</div>
+
+          <h3>Disponibilidad</h3>
+
+          <p>
+            Disponible todos los días para trabajar,
+            mejorar y darle vida a tu servidor. ✨
+          </p>
+
+        </article>
+
+
+        <article class="card payment-card">
+
+          <div class="card-icon">💎</div>
+
+          <div>
+            <h3>Método de pago</h3>
+
+            <p>
+              Acepto <strong>Nitro o Boost para mi servidor</strong>.
+              ❣️
+            </p>
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================
+         SOBRE MÍ
+    ========================= -->
+
+    <section id="sobre-mi" class="page">
+
+      <div class="section-heading">
+        <span>Conóceme</span>
+
+        <h2>🧡 Sobre mí</h2>
+
+        <p>
+          Un poco sobre quién soy y las cosas que me gustan.
+        </p>
+      </div>
+
+
+      <div class="about-box">
+
+        <div class="about-top">
+
+          <div class="avatar-placeholder">
+            🧡
+          </div>
+
+          <div class="about-name">
+            <h3>🧡🩷 Mati Jo</h3>
+            <p>Discord • Gaming • Creatividad</p>
+          </div>
+
+        </div>
+
+
+        <div class="about-grid">
+
+          <div class="about-item">
+            🦋 Mi artista favorito es
+            <strong>JVKE</strong>.
+          </div>
+
+          <div class="about-item">
+            🧡 Mi color favorito es el
+            <strong>naranja</strong>, pero me encanta
+            combinarlo con rosa.
+          </div>
+
+          <div class="about-item">
+            🚗 Mi marca favorita de carros es
+            <strong>BMW</strong>.
+          </div>
+
+          <div class="about-item">
+            🎮 Me encanta jugar y descubrir
+            diferentes videojuegos.
+          </div>
+
+        </div>
+
+
+        <p class="about-description">
+
+          🎮 Soy gamer de
+          <strong>Minecraft, The Crew, Need for Speed,
+          Mario, Sonic, Gran Turismo, Rocket League</strong>
+          y muchos más.
+
+          <br><br>
+
+          ✨ Me considero una persona
+          <strong>amable, responsable y feliz</strong>.
+          Siempre intento disfrutar lo que hago y conseguir
+          que cada proyecto quede lo mejor posible.
+
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================
+         MI SERVIDOR
+    ========================= -->
+
+    <section id="servidor" class="page">
+
+      <div class="section-heading">
+        <span>Mi comunidad</span>
+        <h2>✨ Mi servidor</h2>
+      </div>
+
+
+      <div class="server-hero">
+
+        <div class="server-logo">
+          🧡
+        </div>
+
+        <h2>
+          ミ🧡Glow Studios🩷彡
+        </h2>
+
+        <div class="server-subtitle">
+          Eventos que brillan cada vez más ✨
+        </div>
+
+
+        <p class="server-description">
+
+          👋 ¡Hola! Soy Mati Jo. Bienvenido a mi Studio
+          de eventos de Minecraft, con eventos cada día
+          para <strong>JAVA Y BEDROCK</strong>.
+
+          <br><br>
+
+          También somos un espacio amigable para compartir,
+          socializar, jugar y pasarla bien con nuestra comunidad. 🧡
+
+        </p>
+
+
+        <div class="server-features">
+
+          <div class="server-feature">
+            ✨ <strong>Servidor moderno</strong>
+          </div>
+
+          <div class="server-feature">
+            🟩 <strong>Playlist oficial de Spotify</strong>
+          </div>
+
+          <div class="server-feature">
+            🎉 <strong>Eventos constantes</strong><br>
+            Eventos grandes de Minecraft, sorteos y más.
+          </div>
+
+          <div class="server-feature">
+            🤖 <strong>Bot oficial</strong><br>
+            Economía, niveles y más funciones.
+          </div>
+
+          <div class="server-feature">
+            🤝 <strong>Alianzas</strong><br>
+            Unión con otros servidores y comunidades.
+          </div>
+
+          <div class="server-feature">
+            💎 <strong>Novedades semanales</strong><br>
+            Nuevas funciones, canales y sorpresas.
+          </div>
+
+          <div class="server-feature">
+            🎮 <strong>Gaming y diversión</strong><br>
+            Un espacio para compartir y jugar.
+          </div>
+
+          <div class="server-feature">
+            🌟 <strong>Nuestro compromiso</strong><br>
+            Cada miembro es valioso para la comunidad.
+          </div>
+
+        </div>
+
+
+        <div class="server-buttons">
+
+          <a
+            class="main-button primary"
+            href="https://discord.gg/wu24nhW9Rj"
+            target="_blank"
+            rel="noopener noreferrer">
+
+            💬 Unirme a Discord
+
+          </a>
+
+
+          <a
+            class="main-button"
+            href="https://open.spotify.com/playlist/1nnJvARTIRu8B5M0dCIeFR?si=NxTbrdROSmm3QvDfBmqzqw"
+            target="_blank"
+            rel="noopener noreferrer">
+
+            🟢 Playlist oficial
+
+          </a>
+
+
+          <a
+            class="main-button"
+            href="https://klipy.com/gifs/letter-kenny-1"
+            target="_blank"
+            rel="noopener noreferrer">
+
+            ✨ Ver GIF
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================
+         EQUIPO
+    ========================= -->
+
+    <section id="equipo" class="page">
+
+      <div class="section-heading">
+
+        <span>Personas</span>
+
+        <h2>👥 Equipo</h2>
+
+        <p>
+          Las personas que forman parte de este espacio.
+        </p>
+
+      </div>
+
+
+      <div class="team-grid">
+
+        <div class="team-card">
+
+          <div class="team-avatar">
+            🧡
+          </div>
+
+          <h3>Mati God</h3>
+
+          <p>
+            Creador del portafolio, configuración de servidores,
+            decoración y administración.
+          </p>
+
+        </div>
+
+
+        <div class="team-card">
+
+          <div class="team-avatar">
+            🩷
+          </div>
+
+          <h3>mati_jojojo</h3>
+
+          <p>
+            Miembro del equipo y parte de este proyecto.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+    Hecho con 🧡 + 🩷 por <strong>Mati God</strong>
+  </footer>
+
+
+  <script>
+
+    const pages =
+      document.querySelectorAll(".page");
+
+    const navButtons =
+      document.querySelectorAll(".nav-btn");
+
+    const goButtons =
+      document.querySelectorAll(".go-page");
+
+
+    function openPage(pageName) {
+
+      pages.forEach(page => {
+        page.classList.remove("active");
+      });
+
+
+      navButtons.forEach(button => {
+        button.classList.remove("active");
+      });
+
+
+      const selectedPage =
+        document.getElementById(pageName);
+
+
+      if (selectedPage) {
+        selectedPage.classList.add("active");
+      }
+
+
+      const selectedNav =
+        document.querySelector(
+          `.nav-btn[data-page="${pageName}"]`
+        );
+
+
+      if (selectedNav) {
+        selectedNav.classList.add("active");
+      }
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    navButtons.forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        openPage(
+          button.dataset.page
+        );
+
+      });
+
+    });
+
+
+    goButtons.forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        openPage(
+          button.dataset.page
+        );
+
+      });
+
+    });
+
+
+    /* EFECTO DE MOVIMIENTO SUAVE
+       EN LAS TARJETAS EN PC */
+
+    document.querySelectorAll(".card")
+      .forEach(card => {
+
+        card.addEventListener(
+          "mousemove",
+          event => {
+
+            if (window.innerWidth < 700) return;
+
+            const rect =
+              card.getBoundingClientRect();
+
+            const x =
+              event.clientX - rect.left;
+
+            const y =
+              event.clientY - rect.top;
+
+            const centerX =
+              rect.width / 2;
+
+            const centerY =
+              rect.height / 2;
+
+            const rotateX =
+              ((y - centerY) / centerY) * -2;
+
+            const rotateY =
+              ((x - centerX) / centerX) * 2;
+
+
+            card.style.transform =
+              `translateY(-8px)
+               perspective(800px)
+               rotateX(${rotateX}deg)
+               rotateY(${rotateY}deg)`;
+
+          }
+        );
+
+
+        card.addEventListener(
+          "mouseleave",
+          () => {
+
+            card.style.transform = "";
+
+          }
+        );
+
+      });
+
+  </script>
+
+</body>
+</html>
